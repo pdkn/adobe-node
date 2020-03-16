@@ -9,7 +9,8 @@ const scriptingExtension: Map<AdobeAppName, AdobeAppScriptFileType> = new Map<Ad
     [AdobeAppName.Animate, AdobeAppScriptFileType.Jsfl],
     [AdobeAppName.Photoshop, AdobeAppScriptFileType.Jsx],
     [AdobeAppName.Illustrator, AdobeAppScriptFileType.Jsx],
-    [AdobeAppName.InDesign, AdobeAppScriptFileType.Jsx]
+    [AdobeAppName.InDesign, AdobeAppScriptFileType.Jsx],
+    [AdobeAppName.AfterEffects, AdobeAppScriptFileType.Jsx],
 ]);
 
 const newAdobeScriptFileCreator = (config: Config): CommandFileCreator => {
@@ -42,7 +43,7 @@ const newAdobeScriptFileCreator = (config: Config): CommandFileCreator => {
     const buildBody = (command: string, useBuiltInScript: boolean): string => {
         const scriptPath: string = path.join(jsPath, appName, `${command}.js`);
         const builtInScript: string = path.join(__dirname, '..', 'scripts', appName, `${command}.js`);
-        
+
         if (useBuiltInScript && fs.existsSync(builtInScript)) {
             console.info(`Built-in Script file found: ${builtInScript}`);
             return fs.readFileSync(builtInScript).toString();

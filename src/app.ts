@@ -12,7 +12,7 @@ export const newAdobeApp = (config: Config, timeoutCallback?: Function): AdobeAp
   const scriptCreator: AdobeScriptCreator = newAdobeScriptCreator(config);
   const commandStack: CommandStack = newCommandStack();
   const eventListener: AdobeEventListener = newAdobeAppListener(config.host, config.port, eventListenerCallback);
-  const appProcess: AdobeAppProcess = newAdobeAppProcess(config.app.path, appCloseCallback, {
+  const appProcess: AdobeAppProcess = newAdobeAppProcess(config.app.name, config.app.path, appCloseCallback, {
     timeout: config.appTimeout,
     timeoutCallback
   });
@@ -26,7 +26,7 @@ export const newAdobeApp = (config: Config, timeoutCallback?: Function): AdobeAp
   }
 
   function useBuiltInScript(command: string): boolean {
-    return command === AdobeAppEvent.CloseDocument 
+    return command === AdobeAppEvent.CloseDocument
       || command === AdobeAppEvent.SaveDocument
       || command === AdobeAppEvent.SaveAndCloseDocument
       || command === AdobeAppEvent.SaveAsDocument
@@ -53,7 +53,7 @@ export const newAdobeApp = (config: Config, timeoutCallback?: Function): AdobeAp
 
     saveDocument: (...documents: string[]): Promise<any> =>
       app.runScript(AdobeAppEvent.SaveDocument, { documents }),
-    
+
     selectDocument: (document: string): Promise<any> =>
       app.runScript(AdobeAppEvent.SelectDocument, { document }),
 
